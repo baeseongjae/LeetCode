@@ -6,12 +6,22 @@ class Solution:
         # Can you come up with an algorithm that runs in O(nlogn)
         # D[i]는? i번째까지 증가하는 수열의 길이
 
-        N = len(nums)
-        D = [1] * N
+        lis = [nums[0]]
+        for num in nums:
+            # 현재요소가 마지막 요소보다 큰 경우 추가 
+            if num > lis[-1]:
+                lis.append(num)
+            else:
+                l, r = 0, len(lis) - 1
+                while l < r:
+                    mid = (l + r) // 2
+                    # 이진탐색을 통한 값
+                    if lis[mid] < num:
+                        l = mid + 1
+                    else:
+                        r = mid
+                lis[l] = num
+                
+        return len(lis)
         
-        for i in range(1, N):
-            for j in range(0, i):
-                if nums[i] > nums[j]:
-                    D[i] = max(D[i], D[j]+1)
-
-        return max(D)
+      
